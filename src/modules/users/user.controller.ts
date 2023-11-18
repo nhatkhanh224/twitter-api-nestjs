@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, Put } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { User } from '../../schemas/user.schema';
 
@@ -14,7 +14,19 @@ export class UserController {
     return this.userService.findUserByEmail(email);
   }
   @Post("/createAccount")
-  async createUser(@Body() { username, email, name, password }):  Promise<User> {
-    return await this.userService.createUser(username, email, name, password);
+  async createUser(@Body() { username, email, name, password, createdAt, updateAt }):  Promise<User> {
+    return await this.userService.createUser(username, email, name, password, createdAt, updateAt);
+  }
+  // @Get(':username')
+  // async findUserByUsername(@Param('username') username: string): Promise<User> {
+  //   return this.userService.findUserByUsername(username);
+  // }
+  @Get(':userId')
+  async findUserByID(@Param('userId') userId: string): Promise<User> {
+    return this.userService.findUserByID(userId);
+  }
+  @Put("/updateProfile")
+  async updateProfile(@Body() { id, name, username, bio, profileImage, coverImage }):  Promise<User> {
+    return await this.userService.updateProfile( id, name, username, bio, profileImage, coverImage);
   }
 }
