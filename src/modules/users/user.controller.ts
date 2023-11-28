@@ -26,7 +26,15 @@ export class UserController {
     return this.userService.findUserByID(userId);
   }
   @Put("/updateProfile")
-  async updateProfile(@Body() { id, name, username, bio, profileImage, coverImage }):  Promise<User> {
-    return await this.userService.updateProfile( id, name, username, bio, profileImage, coverImage);
+  async updateProfile(@Body() { id, name, username, bio, profileImage, coverImage, hasNotification, followingIds }):  Promise<User> {
+    return await this.userService.updateProfile( id, name, username, bio, profileImage, coverImage, hasNotification, followingIds);
+  }
+  @Get('/follow/:userId')
+  async findFollowID(@Param('userId') userId: string): Promise<User> {
+    return this.userService.findFollowID(userId);
+  }
+  @Get('/follow/count/:userId')
+  async countFollowers(@Param('userId') userId: string): Promise<User> {
+    return this.userService.countFollowers(userId);
   }
 }

@@ -27,6 +27,12 @@ export class User {
   profileImage: string;
 
   @Prop()
+  followingIds: string[];
+
+  @Prop()
+  hasNotification: boolean;
+
+  @Prop()
   createdAt: Date;
 
   @Prop()

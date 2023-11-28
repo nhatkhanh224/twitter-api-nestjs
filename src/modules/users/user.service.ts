@@ -10,7 +10,7 @@ export class UserService {
     return await this.userModel.find().exec();
   }
   async findUserByEmail(email: string): Promise<User | null> {
-    return await this.userModel.findOne({ email }).exec();
+    return await this.userModel.findOne({ email }).select(['-profileImage','-coverImage']).exec();
   }
   async createUser(username: string, email: string, name: string, password: string, createdAt: string, updateAt: string): Promise<User> {
     const salt = await bcrypt.genSalt(12);
@@ -26,9 +26,31 @@ export class UserService {
     // return await this.userModel.findOne({ username }).select('-password').exec();
     return await this.userModel.findOne({ _id: userId  }).exec();
   }
-  async updateProfile( id: string, name: string, username: string, bio: string, profileImage: string, coverImage: string): Promise<User | null> {
+  async updateProfile( id: string, name: string, username: string, bio: string, profileImage: string, coverImage: string, hasNotification: boolean, followingIds:string[]): Promise<User | null> {
     const filter = { _id: id };
-    const update = { name, username, bio, profileImage, coverImage };
-    return await this.userModel.findOneAndUpdate(filter, update);
+    const update = { name, username, bio, profileImage, coverImage, followingIds, hasNotification };
+    return await this.userModel.findOneAndUpdate(filter, update).select(['-profileImage','-coverImage','-password']).exec();
+  }
+  async findFollowID(userId: string): Promise<User | null> {
+    return await this.userModel.findOne({ _id: userId }).select(['-profileImage','-coverImage','-password']).exec();
+  }
+  async countFollowers(userId: string): Promise<User | null> {
+    const result = await this.userModel.aggregate([
+      {
+        $unwind: '$followingIds',
+      },
+      {
+        $match: {
+          followingIds: userId,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+    return result.length > 0 ? result[0].count : 0;
   }
 }
