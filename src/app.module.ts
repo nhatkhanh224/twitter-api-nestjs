@@ -6,6 +6,7 @@ import { PostModule } from './modules/posts/post.module';
 import { NotificationModule } from './modules/notifications/notification.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as dotenv from 'dotenv';
+import { CommentModule } from './modules/comments/comment.module';
 dotenv.config();
 
 @Module({
@@ -13,6 +14,7 @@ dotenv.config();
     UserModule,
     NotificationModule,
     PostModule,
+    CommentModule,
     MongooseModule.forRoot(process.env.MONGODB_URL),
   ],
   controllers: [AppController],

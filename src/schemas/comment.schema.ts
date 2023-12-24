@@ -2,23 +2,23 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { User } from './user.schema'
-import { Comment } from './comment.schema'
+// import { Posts } from './post.schema'
 
-export type PostDocument = HydratedDocument<Posts>;
+export type CommentDocument = HydratedDocument<Comment>;
 
 @Schema()
-export class Posts {
+export class Comment {
+  toObject() {
+    throw new Error('Method not implemented.');
+  }
   @Prop()
   body: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   userId: Types.ObjectId;
 
-  @Prop()
-  image: string;
-
-  @Prop()
-  likedIds: string[];
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Posts' })
+  postId: Types.ObjectId;
 
   @Prop()
   createdAt: Date;
@@ -30,10 +30,7 @@ export class Posts {
   deleteAt: Date;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  users: User;
-
-  @Prop()
-  comments: Comment[];
+  user: User;
 }
 
-export const PostSchema = SchemaFactory.createForClass(Posts);
+export const CommentSchema = SchemaFactory.createForClass(Comment);

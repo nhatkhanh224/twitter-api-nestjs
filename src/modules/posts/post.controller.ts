@@ -13,6 +13,10 @@ export class PostController {
   async createPost(@Body() { body, userId, createdAt, updatedAt }): Promise<Posts> {
     return this.postService.createPost(body, userId, createdAt, updatedAt);
   }
+  @Put('/updatePost')
+  async updatePost(@Body() { postId, likedIds, updatedAt }): Promise<Posts> {
+    return this.postService.updatePost(postId, likedIds, updatedAt);
+  }
   @Post('/findPostByUserID')
   async findPostByUserID(@Body() { userId }): Promise<Posts[]> {
     return this.postService.findPostByUserID(userId);
