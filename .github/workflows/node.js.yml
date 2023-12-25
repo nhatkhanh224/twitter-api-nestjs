@@ -9,10 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      MONGODB_URL: ${{ secrets.MONGODB_URL }}
-
     steps:
+      - name: Hello world action
+        env: 
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+        
       - name: Checkout Repository
         uses: actions/checkout@v2
 
