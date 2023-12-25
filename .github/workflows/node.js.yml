@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      MONGODB_URL: ${{ secrets.TWITTER_MONGODB_URL }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -18,14 +21,14 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Set up Environment Variables
-        run: echo "MONGODB_URL=${{secrets.MONGODB_URL}}" >> .env
-
       - name: Install Dependencies
         run: npm install
 
       - name: Build
         run: npm run build
+
+      - name: Create .env
+        run: echo "MONGODB_URL=${MONGODB_URL}" >> .env
 
       - name: Start Nest.js App
         run: npm start
