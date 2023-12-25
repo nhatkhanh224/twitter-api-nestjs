@@ -28,11 +28,5 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Create .env
-        run: echo "MONGODB_URL=${MONGODB_URL}" >> .env
-
-      - name: Display .env
-        run: cat .env
-
       - name: Start Nest.js App
         run: npm start
