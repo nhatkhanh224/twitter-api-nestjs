@@ -19,7 +19,7 @@ jobs:
           node-version: '16'
 
       - name: Set up Environment Variables
-        run: echo "MONGODB_URL=${{ secrets.TWITER_API_NESTJS_PRODUCTION_MONGODB_URL }}" >> .env
+        run: echo "MONGODB_URL=${{secrets.MONGODB_URL}}" >> .env
 
       - name: Install Dependencies
         run: npm install
