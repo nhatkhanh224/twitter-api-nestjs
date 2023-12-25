@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      MONGODB_URL: ${{ secrets.TWITTER_MONGODB_URL }}
+      MONGODB_URL: ${{ secrets.MONGODB_URL }}
 
     steps:
       - name: Checkout Repository
