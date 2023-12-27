@@ -21,12 +21,14 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: 'Set up env variables'
+        run: echo "MONGODB_URL=${{ secrets.MONGODB_URL }}" >> $GITHUB_ENV
+
       - name: 'Create env file'
-        run: |
-          echo "MONGODB_URL=${{ secrets.MONGODB_URL }}" > .env
+        run: echo "MONGODB_URL=${{ secrets.MONGODB_URL }}" > .env
+
       - name: 'Write env file'
-        run: |
-          cat .env
+        run: cat .env
 
       - name: Build
         run: npm run build
