@@ -10,23 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v2.0
+      with:
+        envkey_DEBUG: false
+        MONGODB_URL: ${{ secrets.MONGODB_URL }}
+        file_name: .env
+        fail_on_empty: false
+        sort_keys: false
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Install Dependencies
-        run: npm install
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
 
-      - name: 'Create env file'
-        run: |
-          echo "MONGODB_URL=mongodb+srv://${{ secrets.MONGODB_USERNAME }}:${{ secrets.MONGODB_PASSWORD }}@cluster0.q4ixk31.mongodb.net/twiter" > .env
+    - name: Install Dependencies
+      run: npm install
 
-      - name: Build
-        run: npm run build
+    - name: Build
+      run: npm run build
 
-      - name: Start Nest.js App
-        run: npm start
+    - name: Start Nest.js App
+      run: npm start
