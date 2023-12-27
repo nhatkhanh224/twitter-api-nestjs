@@ -10,10 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Create env file'
-        run: |
-          echo "MONGODB_URL=${{ secrets.MONGODB_URL }}" > .env
-        
       - name: Checkout Repository
         uses: actions/checkout@v2
 
@@ -24,6 +20,13 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+        
+      - name: 'Create env file'
+        run: |
+          echo "MONGODB_URL=${{ secrets.MONGODB_URL }}" > .env
+          
+      - name: Print MONGODB_URL
+        run: echo "MONGODB_URL=${{ secrets.MONGODB_URL }}"
 
       - name: Build
         run: npm run build
