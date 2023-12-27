@@ -21,9 +21,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Log MongoDB connection info
-        run: echo "MongoDB connection: ${{ secrets.MONGODB_USERNAME }}:${{ secrets.MONGODB_PASSWORD }}@cluster0.q4ixk31.mongodb.net/twiter"
-
       - name: 'Create env file'
         run: |
           echo "MONGODB_URL=mongodb+srv://${{ secrets.MONGODB_USERNAME }}:${{ secrets.MONGODB_PASSWORD }}@cluster0.q4ixk31.mongodb.net/twiter" > .env
